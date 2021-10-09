@@ -25,7 +25,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String label = 'Label1';
+  String label = ' ';
   final myController = TextEditingController();
 
   @override
@@ -53,24 +53,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Text('$label', style: Theme.of(context).textTheme.headline6),
                 SizedBox(width: 50),
-                Container(
-                  width: 200,
-                  child: TextField(
-                    controller: myController,
-                    maxLength: 10,
-                    decoration: InputDecoration(
-                      labelText: 'Input binary number',
-                      labelStyle: TextStyle(
-                        color: Colors.black,
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Colors.black,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                _buildTextField(),
               ],
             ),
             SizedBox(height: 50),
@@ -79,47 +62,75 @@ class _HomePageState extends State<HomePage> {
               children: [
                 ButtonBar(
                   children: [
-                    ElevatedButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Button',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(100, 40),
-                      ),
-                    ),
+                    _buildFirstBtn(),
                     SizedBox(width: 50),
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          String getText = myController.text;
-                          String labelText = '';
-                          int bitToDec = int.parse(getText, radix: 2);
-                          String decToString = bitToDec.toString();
-
-                          if (decToString.endsWith('0') ||
-                              decToString.endsWith('5'))
-                            labelText = 'Делится';
-                          else
-                            labelText = 'Не делится';
-
-                          label = '$labelText';
-                        });
-                      },
-                      child: Text(
-                        'BitBtn',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: Size(100, 40),
-                      ),
-                    ),
+                    _buildBitBtn(),
                   ],
                 )
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  _buildBitBtn() {
+    return ElevatedButton(
+      onPressed: () {
+        setState(() {
+          String getText = myController.text;
+          String labelText = '';
+          int bitToDec = int.parse(getText, radix: 2);
+          String decToString = bitToDec.toString();
+
+          if (decToString.endsWith('0') || decToString.endsWith('5'))
+            labelText = 'Делится';
+          else
+            labelText = 'Не делится';
+
+          label = '$labelText';
+        });
+      },
+      child: Text(
+        'BitBtn',
+        style: TextStyle(fontSize: 16),
+      ),
+      style: ElevatedButton.styleFrom(
+        minimumSize: Size(100, 40),
+      ),
+    );
+  }
+
+  _buildFirstBtn() {
+    return ElevatedButton(
+      onPressed: () {},
+      child: Text(
+        'Button',
+        style: TextStyle(fontSize: 16),
+      ),
+      style: ElevatedButton.styleFrom(
+        minimumSize: Size(100, 40),
+      ),
+    );
+  }
+
+  _buildTextField() {
+    return Container(
+      width: 200,
+      child: TextField(
+        controller: myController,
+        maxLength: 10,
+        decoration: InputDecoration(
+          labelText: 'Input binary number',
+          labelStyle: TextStyle(
+            color: Colors.black,
+          ),
+          border: OutlineInputBorder(
+            borderSide: BorderSide(
+              color: Colors.black,
+            ),
+          ),
         ),
       ),
     );
